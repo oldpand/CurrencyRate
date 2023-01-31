@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CurrencyRate.Service.Results
+﻿namespace CurrencyRate.Service.Results
 {
     public class BaseResult
     {

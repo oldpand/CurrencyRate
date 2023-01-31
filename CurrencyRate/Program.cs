@@ -1,3 +1,4 @@
+using CurrencyRate.Model;
 using CurrencyRate.Service.Commands;
 using CurrencyRate.Service.Handlers;
 using CurrencyRate.Service.Results;
@@ -12,13 +13,16 @@ Log.Logger = new LoggerConfiguration()
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Host.UseSerilog();
+builder.Host
+    .UseSerilog()
+    .ConfigureServices(services => services.AddMemoryCache());
 
 builder.Services.AddControllers();
 
 builder.Services
     .AddEndpointsApiExplorer()
     .AddSwaggerGen()
+    .AddSingleton<ICacheService<CurrencyRateStructure>, CacheService<CurrencyRateStructure>>()
     .AddScoped<ICurrencyRateFileService, CurrencyRateFileService>()
     .AddMediatR(typeof(GetCurrensyRateQueryHandler).Assembly)
     .AddScoped<IRequestHandler<GetCurrensyRateQuery, GetCurrencyRateResult>, GetCurrensyRateQueryHandler>()

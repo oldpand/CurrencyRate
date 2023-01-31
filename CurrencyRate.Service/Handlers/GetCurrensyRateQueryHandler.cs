@@ -24,32 +24,21 @@ namespace CurrencyRate.Service.Handlers
 
             try
             {
-                var rows = await _currencyRateFileService.GetRateRowsAsync();
+                var rows = await _currencyRateFileService.GetRateOrderedRowsAsync();
 
                 _logger.LogInformation("Rows loaded");
 
                 if (request.Historical)
                 {
-                    var resultCollection = rows
-                        .Where(r => r.From == request.From &&
-                                    r.To == request.To &&
-                                    r.DateTime >= DateTime.UtcNow.AddDays(-1))
-                        .OrderByDescending(r => r.DateTime)
-                        .Select(r => r.Currency)
-                        .ToList();
+                    var resultCollection = rows.Rates[request.From + request.To];
 
                     result.Currences = resultCollection;
                     return result;
                 }
 
-                var resultRow = rows
-                    .OrderByDescending(r => r.DateTime)
-                    .First(r => r.From == request.From &&
-                                r.To == request.To &&
-                                r.DateTime >= DateTime.UtcNow.AddDays(-1))
-                    .Currency;
+                var row = rows.Rates[request.From + request.To].First();
 
-                result.Currences = new List<decimal> { resultRow };
+                result.Currences = new List<decimal> { row };
                 return result;
             }
             catch (FileLoadException ex)

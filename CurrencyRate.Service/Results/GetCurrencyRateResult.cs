@@ -2,6 +2,6 @@
 {
     public class GetCurrencyRateResult : BaseResult
     {
-        public IReadOnlyCollection<decimal> Currences { get; set; } = null!;
+        public IEnumerable<decimal> Currences { get; set; } = null!;
     }
 }

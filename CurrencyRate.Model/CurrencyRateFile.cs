@@ -1,6 +1,6 @@
 ﻿namespace CurrencyRate.Model
 {
-    public class CurrencyRateRow
+    public class CurrencyRateFile
     {
         public string From { get; set; } = null!;
         public string To { get; set; } = null!;
