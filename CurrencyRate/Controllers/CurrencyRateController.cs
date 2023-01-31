@@ -16,11 +16,11 @@ namespace CurrencyRate.PublicApi.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetCurrencyRate(string from, string to, bool isHistory, CancellationToken cancellationToken)
+        public async Task<IActionResult> GetExchange(string from, string to, bool historical, CancellationToken cancellationToken)
         {
-            var result = await _mediator.Send(new GetCurrensyRateQuery(from, to, isHistory), cancellationToken);
+            var result = await _mediator.Send(new GetCurrensyRateQuery(from, to, historical), cancellationToken);
 
-            if (result.IsSuccess)
+            if (!result.IsSuccess)
             {
                 BadRequest(result);
             }

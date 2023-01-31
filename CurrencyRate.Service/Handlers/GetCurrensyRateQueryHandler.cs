@@ -28,7 +28,7 @@ namespace CurrencyRate.Service.Handlers
 
                 _logger.LogInformation("Rows loaded");
 
-                if (request.IsHistory)
+                if (request.Historical)
                 {
                     var resultCollection = rows
                         .Where(r => r.From == request.From &&
